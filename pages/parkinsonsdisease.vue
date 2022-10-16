@@ -1,3 +1,3 @@
 <template>
-  <div>parkinsons disease</div>
+  <div><p>Parkinsons disease</p></div>
 </template>
