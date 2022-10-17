@@ -146,6 +146,11 @@ onMounted(() => {
   padding-left: 1.2rem;
   padding-right: 1.2rem;
   background-color: darken($dark-shade, 10%);
+  transition: all 400ms ease;
+}
+
+.card:hover {
+  scale: 1.1;
 }
 
 * {
