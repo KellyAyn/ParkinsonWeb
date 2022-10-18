@@ -41,7 +41,7 @@
 }
 .nav-section {
   align-items: center;
-  height: 5rem;
+  height: 8vh;
   display: flex;
   width: 20%;
   justify-content: space-evenly;
