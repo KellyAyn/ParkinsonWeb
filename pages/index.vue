@@ -1,27 +1,30 @@
 <script setup>
-let windowWidth = window.innerWidth / 6;
-let windowHeight = window.innerHeight / 6;
+const { width, height } = useWindowSize();
+const { x, y } = useMouse();
 
-onMounted(() => {
-  window.addEventListener("mousemove", (e) => {
-    const bgp = document.querySelector(".background-pattern");
-    const bgg = document.querySelector(".background-gradient");
-    const mouseX = event.clientX / windowWidth;
-    const mouseY = event.clientY / windowHeight;
-    const degree = mouseY * 15 + 45;
-    const firstPercentage = 25 + mouseX * 8.3333333;
-    const secondPercentage = 115 - firstPercentage;
-    bgp.style.transform = `translate3d(-${mouseX}%, -${mouseY}%, 0)`;
-    bgg.style.background = `linear-gradient(${degree}deg, #c63f6f 0%, #dcb484 ${secondPercentage}%)`;
-  });
-});
+const translate = ref(null);
+const background = ref(null);
+
+async function gradient() {
+  const newWidth = width.value / 6;
+  const newHeight = height.value / 6;
+  const mouseX = `-${x.value / newWidth}%`;
+  const mouseY = `-${y.value / newHeight}%`;
+  const degree = `${(y.value / newHeight) * 15 + 45}deg`;
+  const percantage = `${115 - (25 + (x.value / newWidth) * 8.3333333)}%`;
+  translate.value = `translate3d(${mouseX}, ${mouseY}, 0)`;
+  background.value = `linear-gradient(${degree}, #c63f6f 0%, #dcb484 ${percantage})`;
+  console.log(newWidth, newHeight, mouseX, mouseY, degree, percantage);
+}
+
+watch([x, () => y.value, () => width.value, () => height.value], gradient);
 </script>
 
 <template>
   <div>
     <div class="title-card-wrapper">
       <div class="title-card">
-        <h1 class="project-name">Projekt Parkinson</h1>
+        <h1 class="project-name">Pojekt Parkinson</h1>
         <p class="project-description">
           Parkinsonova nemoc není smrtelná, ale život postiženého změní.
         </p>
@@ -62,6 +65,33 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+.background-gradient {
+  position: absolute;
+  height: 100vh;
+  width: 125vw;
+  transition: opacity 800ms ease, background-size 800ms ease,
+    background-position 800ms ease;
+  z-index: -2;
+  background: v-bind(background);
+}
+
+.background-pattern {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.25) 9%,
+    transparent 9%
+  );
+  background-position: 0% 0%;
+  background-size: 10vmin 10vmin;
+  height: 100vh;
+  width: 125vw;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  transition: opacity 800ms ease, background-size 800ms ease,
+    background-position 800ms ease;
+  z-index: -1;
+  transform: v-bind(translate);
+}
 .title-card-wrapper {
   position: relative;
   overflow: hidden;
@@ -72,16 +102,6 @@ onMounted(() => {
   border-bottom: 2px $dark-accent solid;
   z-index: 1;
 }
-
-.background-gradient {
-  position: absolute;
-  height: 100vh;
-  width: 125vw;
-  transition: opacity 800ms ease, background-size 800ms ease,
-    background-position 800ms ease;
-  z-index: -2;
-}
-
 .title-card {
   position: relative;
   background: $dark-shade;
@@ -112,23 +132,6 @@ onMounted(() => {
   width: 100%;
   margin-left: 5%;
   height: 65%;
-}
-
-.background-pattern {
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.25) 9%,
-    transparent 9%
-  );
-  background-position: 0% 0%;
-  background-size: 10vmin 10vmin;
-  height: 100vh;
-  width: 125vw;
-  left: 0px;
-  top: 0px;
-  position: absolute;
-  transition: opacity 800ms ease, background-size 800ms ease,
-    background-position 800ms ease;
-  z-index: -1;
 }
 
 .cards-wrapper {

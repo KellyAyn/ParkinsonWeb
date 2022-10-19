@@ -16,7 +16,9 @@
     </div>
     <div class="section">
       <h1 class="section-header">Provedeme Vám komplexní vyšetření</h1>
-      <div class="section-content"></div>
+      <div class="section-card">
+        <div class="content-card"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -55,7 +57,7 @@
 
 .section {
   padding: 1em 1.5em;
-  justify-content: right;
+  justify-content: left;
   display: flex;
 }
 </style>

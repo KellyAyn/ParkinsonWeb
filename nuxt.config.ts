@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   target: "static",
-  modules: ["@nuxt/content"],
+  modules: ["@nuxt/content", "@vueuse/nuxt"],
   css: [
     "@fortawesome/fontawesome-svg-core/styles.css",
     "assets/scss/main.scss",
